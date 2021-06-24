@@ -51,28 +51,28 @@ contract ('Color',(accounts) => {
             await contract.mint('#TH8DJ5');
             await contract.mint('#DVN347');
             await contract.mint('#000000');
-            let Supply = await contract.totalsupply;
+            let Supply = await contract.colors.length;
             console.log(Supply);
 
             let color ;
             let result = [];
     
-           /* for(var i = 0; i <= totalSupply; i++) {
+            for(var i = 0; i <= totalSupply; i++) {
                 color = await contract.colors[i-1];
                 result.push(color);
             };
-            */
-           // let expectedResult = ['#E8HUE9','#TH8DJ5','#DVN347','#000000'];
-           // assert.equal(result.join(','),expectedResult.join(','), " Total Supply Should be correct");
+            
+            let expectedResult = ['#E8HUE9','#TH8DJ5','#DVN347','#000000'];
+            assert.equal(result.join(','),expectedResult.join(','), " Total Supply Should be correct");
         });
     });
     
    describe ('Total Supply', async() => {
        it('Shows the total supply', async()=> {
            let expectedTotal = 1;
-           let supply = await contract.totalsupply;
+           let supply = await contract.colors.length ;
           console.log(supply);
-           // assert.equal(expectedTotal, result, 'The total supply should be correct');
+            assert.equal(expectedTotal, result, 'The total supply should be correct');
        });
    });
     
