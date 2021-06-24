@@ -8,21 +8,33 @@ contract Color is ERC721 {
     string[] public colors;
     mapping(string => bool) colorExists;
 
+
+
     constructor () ERC721 ("Color","COLOR") {
 
     }
 
+    
+
     function mint(string memory _color) public {
         require(!colorExists[_color]);
-         for(uint i = 0; i<colors.length; i++){
-             
-                 colors.push(_color);
-                 uint id = colors.length - 1;
-                 _mint(msg.sender, id);
-                 colorExists[_color] = true;
-             
-         }
-         
+
+            uint id = colors.length;
+             _mint(msg.sender, id);
+              colors.push(_color);
+             colorExists[_color] = true;
+        
+
+        
+                       
+       
+        
     }
-    
+
+   /* function totalSupply () public view returns (uint) {
+        return colors.length;
+    }
+    */
+
+
 }
