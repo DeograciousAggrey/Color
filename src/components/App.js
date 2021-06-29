@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
-import logo from '../logo.png';
 import './App.css';
 import Web3 from 'web3'
+import Color from '../abis/Color.json'
 
 class App extends Component {
+
+  async componentWillMount() {
+    await this.loadweb3()
+    await this.loadBlockchainData()
+  }
 
   async loadweb3() {
     if (window.ethereum) {
@@ -18,7 +23,33 @@ class App extends Component {
     }
   }
 
+  async loadBlockchainData() {
+    const web3 = window.web3
+    //Load account
+    const accounts = await web3.eth.getAccounts()
+    this.setState({account: accounts[0]})
 
+    const networkId = await web3.eth.net.getId()
+    const networkData = Color.networks[networkId]
+    if (networkData) {
+          const abi = Color.abi
+          const address = networkData.address
+          const myContract = new web3.eth.Contract (abi, address)
+          console.log(myContract)
+    } else {
+      window.alert ('Smart Contract not deployed to the detected network')
+    }
+    
+
+
+  }
+
+  constructor (props) {
+    super(props)
+    this.state = {
+      account: ''
+    }
+  }
 
 
   render() {
@@ -33,33 +64,27 @@ class App extends Component {
           >
             Color Tokens
           </a>
+            <ul className="navbar-nav px-3">
+              <li className="nav-item text-nowrap d-none d-sm-none d-sm-block">
+                <small className="text-white"> <span id="account">{this.state.account}</span></small>
+              </li>
+            </ul>
+
         </nav>
         <div className="container-fluid mt-5">
           <div className="row">
             <main role="main" className="col-lg-12 d-flex text-center">
               <div className="content mr-auto ml-auto">
-                <a
-                  href="http://www.dappuniversity.com/bootcamp"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img src={logo} className="App-logo" alt="logo" />
-                </a>
-                <h1>Dapp University Starter Kit</h1>
-                <p>
-                  Edit <code>src/components/App.js</code> and save to reload.
-                </p>
-                <a
-                  className="App-link"
-                  href="http://www.dappuniversity.com/bootcamp"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  LEARN BLOCKCHAIN <u><b>NOW! </b></u>
-                </a>
+                {/*FORM GOES HERE */}
+
               </div>
             </main>
           </div>
+          <hr></hr>
+            <div className="row text-center">
+              <p>Tokens Go here</p>
+            </div>
+
         </div>
       </div>
     );
