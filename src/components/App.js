@@ -1,8 +1,26 @@
 import React, { Component } from 'react';
 import logo from '../logo.png';
 import './App.css';
+import Web3 from 'web3'
 
 class App extends Component {
+
+  async loadweb3() {
+    if (window.ethereum) {
+      window.web3 = new Web3(window.ethereum)
+      await window.ethereum.enable()
+    }
+    else if (window.web3) {
+      window.web3 = new Web3(window.web3.currentProvider)
+    }
+    else {
+      window.alert('Non-ethereum browser detected. You should consider trying Metamask !')
+    }
+  }
+
+
+
+
   render() {
     return (
       <div>
@@ -13,7 +31,7 @@ class App extends Component {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Dapp University
+            Color Tokens
           </a>
         </nav>
         <div className="container-fluid mt-5">
