@@ -14,7 +14,7 @@ contract Color is ERC721 {
 
     }
 
-    
+   
 
     function mint(string memory _color) public {
         require(!colorExists[_color]);
@@ -31,10 +31,7 @@ contract Color is ERC721 {
         
     }
 
-   /* function totalSupply () public view returns (uint) {
-        return colors.length;
-    }
-    */
+  
 
 
 }
