@@ -36,7 +36,21 @@ class App extends Component {
           const abi = Color.abi
           const address = networkData.address
           const myContract = new web3.eth.Contract (abi, address)
-          console.log(myContract)
+          this.setState({ myContract })
+
+          //Get the total number of colors in the contract
+          const colorCount = await myContract.methods.getColorCount().call()
+        
+
+
+         /* //Get colors
+          for (var i= 1; i < myContract.methods.colors.length; i++) {
+            const color = await myContract.methods.colors(i-1).call()
+            this.setState({colors: [...this.state.colors, color]})
+            console.log(myContract.methods.colors.length)
+          }
+         */
+
     } else {
       window.alert ('Smart Contract not deployed to the detected network')
     }
@@ -48,7 +62,9 @@ class App extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      account: ''
+      account: '',
+      myContract: null,
+      colors: []
     }
   }
 

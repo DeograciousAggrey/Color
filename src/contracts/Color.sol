@@ -23,12 +23,12 @@ contract Color is ERC721 {
              _mint(msg.sender, id);
               
              colorExists[_color] = true;
-        
+         
+    }
 
-        
-                       
-       
-        
+    //Function to get total number of colors found in the Color contract
+    function getColorCount() public view returns (uint) {
+                return colors.length;
     }
 
   
