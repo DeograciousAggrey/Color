@@ -38,18 +38,11 @@ class App extends Component {
           const myContract = new web3.eth.Contract (abi, address)
           this.setState({ myContract })
 
-          //Get the total number of colors in the contract
-          const colorCount = await myContract.methods.getColorCount().call()
-        
-
-
-         /* //Get colors
-          for (var i= 1; i < myContract.methods.colors.length; i++) {
-            const color = await myContract.methods.colors(i-1).call()
-            this.setState({colors: [...this.state.colors, color]})
-            console.log(myContract.methods.colors.length)
-          }
-         */
+          //Get the balance of the contract
+          
+         
+          
+         
 
     } else {
       window.alert ('Smart Contract not deployed to the detected network')
