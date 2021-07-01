@@ -39,11 +39,18 @@ class App extends Component {
           this.setState({ myContract })
 
           //Get the balance of the contract
-          
-         
-          
-         
+          const balance = await myContract.methods.balanceOf(accounts[0]).call()
 
+          
+
+          //Load the colors
+          for (var i = 1; i< balance.toNumber(); i++) {
+            const color = await myContract.methods.colors(i-1).call()
+            this.setState({
+              colors: [...this.state.colors, color]
+            })
+          }
+          console.log(this.state.colors)
     } else {
       window.alert ('Smart Contract not deployed to the detected network')
     }
@@ -92,13 +99,24 @@ class App extends Component {
           </div>
           <hr></hr>
             <div className="row text-center">
-              <p>Tokens Go here</p>
+              {this.state.colors.map((color, key) => {
+                return (
+                  <div className="col-md-3 mb-3 col-sm-6 col-xs-12">
+                  <div key={key} className = "col-md-3 mb-3">
+                    <div class="token">
+                      <div>{color}</div>
+                        
+                    </div>
+                  </div>
+                </div>
+                )
+              })}
             </div>
 
         </div>
       </div>
     );
   }
-}
+} 
 
 export default App;
