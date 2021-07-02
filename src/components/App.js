@@ -40,6 +40,7 @@ class App extends Component {
 
           //Get the balance of the contract
           const balance = await myContract.methods.balanceOf(accounts[0]).call()
+          
 
           
 
@@ -50,14 +51,22 @@ class App extends Component {
               colors: [...this.state.colors, color]
             })
           }
-          console.log(this.state.colors)
+          
     } else {
       window.alert ('Smart Contract not deployed to the detected network')
     }
-    
-
-
+  
   }
+
+  mint = (color) =>{
+    this.state.myContract.methods.mint(color).send({from: this.state.account})
+    .once('receipt', (receipt) => {
+      this.setState({
+        colors: [...this.state.colors, color]
+      })
+    })
+  }
+
 
   constructor (props) {
     super(props)
@@ -92,7 +101,31 @@ class App extends Component {
           <div className="row">
             <main role="main" className="col-lg-12 d-flex text-center">
               <div className="content mr-auto ml-auto">
-                {/*FORM GOES HERE */}
+                {/*Create a form with one input*/}
+                <h1 className="text-center">ISSUE TOKEN</h1>
+                <form className="form-inline" onSubmit={(event) => {
+                  event.preventDefault()
+                  const color = this.color.value
+                  this.mint(color)
+                }}>
+                  <div className="form-group">
+                    <label className="sr-only" htmlFor="color">Color</label>
+                    <input
+                      className="form-control mb-1"
+                      id="color"
+                      type="text"
+                      placeholder="e.g #FFFFFF"
+                      ref={(input) => {this.color = input}}
+                    />  
+                    
+                    <input 
+                      className="btn btn-block btn-primary"
+                      type="submit"
+                      value="MINT"
+                    />
+                  </div>
+                </form>
+                  
 
               </div>
             </main>
@@ -101,14 +134,10 @@ class App extends Component {
             <div className="row text-center">
               {this.state.colors.map((color, key) => {
                 return (
-                  <div className="col-md-3 mb-3 col-sm-6 col-xs-12">
-                  <div key={key} className = "col-md-3 mb-3">
-                    <div class="token">
-                      <div>{color}</div>
-                        
-                    </div>
+                  <div key={key} className= "col-md-3 mb-3">
+                    <div className="token" style={{backgroundColor: color }}></div>
+                      <div>{color}</div> 
                   </div>
-                </div>
                 )
               })}
             </div>
